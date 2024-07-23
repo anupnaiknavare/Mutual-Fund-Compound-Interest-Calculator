@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUTUAK FUNC COMPOUND CAL</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f7f7f7;
+      }  
+      
+
+      .calculator {
+        background-color: rgb(201, 218, 218);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 19px;
+        color: rgb(57, 54, 255);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 90%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 30px;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        background-color: rgb(102, 231, 102);
+      }
+
+      button:hover {
+        background-color: rgb(0, 255, 64);
+      }
+
+      .results {
+        margin-top: 20px;
+      }
+
+      .results p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <h1>Mutual Fund Compound Interest Calculator</h1>
+      <form id="calculatorForm">
+        <label for="initialInvestment">Initial Investment (₹):</label>
+        <input type="number" id="initialInvestment" required /><br />
+
+        <label for="monthlyContribution">Monthly Contribution (₹):</label>
+        <input type="number" id="monthlyContribution" required /><br />
+
+        <label for="annualInterestRate">Annual Interest Rate (%):</label>
+        <input type="number" id="annualInterestRate" required /><br />
+
+        <label for="years">Number of Years:</label>
+        <input type="number" id="years" required /><br />
+
+        <button type="button" onclick="calculateCompoundInterest()">
+          Calculate
+        </button>
+      </form>
+      <div class="results">
+        <p>Total Amount: ₹<span id="totalAmount"></span></p>
+        <p>Total Invested: ₹<span id="totalInvested"></span></p>
+        <p>Compound Interest Earned: ₹<span id="interestEarned"></span></p>
+      </div>
+    </div>
+    <script>
+         function calculateCompoundInterest() {
+    const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+    const monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+    const annualInterestRate = parseFloat(document.getElementById('annualInterestRate').value/100);
+    const years = parseInt(document.getElementById('years').value);
+    const months = years * 12;
+    const monthlyRate = annualInterestRate / 12;
+         
+         let totalAmount = initialInvestment * Math.pow(1 + monthlyRate, months);
+
+    for (let i = 1; i <= months; i++) {
+        totalAmount += monthlyContribution * Math.pow(1 + monthlyRate, months - i);
+    }
+
+    const totalInvested = initialInvestment + monthlyContribution * months;
+    const interestEarned = totalAmount - totalInvested;
+
+    document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+    document.getElementById('totalInvested').innerText = totalInvested.toFixed(2);
+    document.getElementById('interestEarned').innerText = interestEarned.toFixed(2);
+}
+    </script>
+  </body>
+</html>
